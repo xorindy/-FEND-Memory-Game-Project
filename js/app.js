@@ -30,29 +30,34 @@ function shuffle(array) {
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
  */
-let cardList = document.querySelectorAll('.card');
-let flippedCards = [];
+ let cardList = document.querySelectorAll('.card');
+ /*Keep track of cards flipped*/
+ let flippedCards = [];
 
-for (let card of cardList) {
-  card.addEventListener('click', function(flip_card) {
-    //add current card to list of "open" cards
-    flippedCards.push(card);
-    if (flippedCards.length > 2){
-      //TODO:prevent from flipping another card
-    } else {
-      //Show cards
-      card.classList.add('open', 'show');
-      //Set timer to flip cards back down
-      setTimeout (function(){
-          for (let card of flippedCards) {
-            card.classList.remove('open', 'show');
-          }
-          //Empty flippedCards array
-          flippedCards = [];
-      }, 1000);
-    };
-  });
-};
+ for(let card of cardList) {
+   card.addEventListener('click', function(flip_card) {
+
+     //Add the card to a *list* of "open" cards
+     flippedCards.push(card);
+     //Disable clicking on the same card
+     if (!card.classList.contains('open') || !card.classList.contains('show')){
+       //Prevent from flipping more than two cards
+       if (flippedCards.length > 2){
+         //hide
+       } else {
+         //Show cards
+         card.classList.add('open','show');
+         /*Set time to loop through open cards to flip them back         over.*/
+         setTimeout(function(){
+           for (let card of flippedCards){
+             card.classList.remove('open','show');
+           }
+           flippedCards = []; //Empty flippedCards array
+         }, 1000);
+         };
+      };
+    });
+  };
 
  /*
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
