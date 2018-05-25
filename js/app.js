@@ -40,8 +40,17 @@ for (let card of cardList) {
     if (flippedCards.length > 2){
       //TODO:prevent from flipping another card
     } else {
+      //Show cards
       card.classList.add('open', 'show');
-    }
+      //Set timer to flip cards back down
+      setTimeout (function(){
+          for (let card of flippedCards) {
+            card.classList.remove('open', 'show');
+          }
+          //Empty flippedCards array
+          flippedCards = [];
+      }, 1000);
+    };
   });
 };
 
