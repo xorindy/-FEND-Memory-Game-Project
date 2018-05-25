@@ -31,10 +31,17 @@ function shuffle(array) {
  *  - display the card's symbol (put this functionality in another function that you call from this one)
  */
 let cardList = document.querySelectorAll('.card');
+let flippedCards = [];
 
 for (let card of cardList) {
   card.addEventListener('click', function(flip_card) {
-    card.classList.add('open', 'show');
+    //add current card to list of "open" cards
+    flippedCards.push(card);
+    if (flippedCards.length > 2){
+      //TODO:prevent from flipping another card
+    } else {
+      card.classList.add('open', 'show');
+    }
   });
 };
 
