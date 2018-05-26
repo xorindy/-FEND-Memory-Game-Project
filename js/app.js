@@ -1,7 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
- const cards = ['fa-diamond','fa-diamond',
+ const allCards = ['fa-diamond','fa-diamond',
                'fa-paper-plane-o','fa-paper-plane-o',
                'fa-anchor','fa-anchor',
                'fa-bolt','fa-bolt',
@@ -43,7 +43,7 @@ function makeCard(card) {
  */
  function newGame(){
    let deck = document.querySelector('.deck');
-   let cardGrid = cards.map(function(card) {
+   let cardGrid = shuffle(allCards).map(function(card) {
      return makeCard(card);
    });
 
