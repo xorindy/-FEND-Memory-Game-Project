@@ -1,13 +1,19 @@
 /*
  * Create a list that holds all of your cards
  */
-
+ const cards = ['fa-diamond','fa-diamond',
+               'fa-paper-plane-o','fa-paper-plane-o',
+               'fa-anchor','fa-anchor',
+               'fa-bolt','fa-bolt',
+               'fa-cube','fa-cube',
+               'fa-leaf','fa-leaf',
+               'fa-bicycle','fa-bicycle',
+               'fa-bomb','fa-bomb'
+               ];
 
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -25,6 +31,26 @@ function shuffle(array) {
     return array;
 }
 
+/*
+ *   - loop through each card and create its HTML
+ */
+function makeCard(card) {
+  return `<li class="card"><i class="fa ${card}"></i></li>`;
+}
+
+/*
+ *   - add each card's HTML to the page
+ */
+ function newGame(){
+   let deck = document.querySelector('.deck');
+   let cardGrid = cards.map(function(card) {
+     return makeCard(card);
+   });
+
+   deck.innerHTML = cardGrid.join('');
+ }
+
+ newGame();
 
 /*
  * set up the event listener for a card. If a card is clicked:
