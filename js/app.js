@@ -62,11 +62,10 @@ function makeCard(card) {
 
  for(let card of cardList) {
    card.addEventListener('click', function(flip_card) {
-
+     //Disable clicking on the same card
+     if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
      //Add the card to a *list* of "open" cards
      flippedCards.push(card);
-     //Disable clicking on the same card
-     if (!card.classList.contains('open') || !card.classList.contains('show')){
        //Prevent from flipping more than two cards
        if (flippedCards.length > 2){
          //hide
