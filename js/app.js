@@ -73,15 +73,32 @@ function makeCard(card) {
        } else {
          //Show cards
          card.classList.add('open','show');
-         /*Set time to loop through open cards to flip them back         over.*/
-         setTimeout(function(){
-           for (let card of flippedCards){
-             card.classList.remove('open','show');
-           }
-           flippedCards = []; //Empty flippedCards array
-         }, 1000);
+         //Check if cards match
+         if (flippedCards[0].dataset.card == flippedCards[1].dataset.card){
+
+             flippedCards[0].classList.add('match');
+             flippedCards[0].classList.add('open');
+             flippedCards[0].classList.add('show');
+
+             flippedCards[1].classList.add('match');
+             flippedCards[1].classList.add('open');
+             flippedCards[1].classList.add('show');
+
+             //Empty flippedCards array
+             flippedCards = [];
+         } else {
+
+           //If cards don't match, flip them over
+           setTimeout(function(){
+             for (let card of flippedCards){
+               card.classList.remove('open','show');
+             }
+             //Empty flippedCards array
+             flippedCards = [];
+           }, 1000);
+         }
          };
-      };
+       };
     });
   };
 
