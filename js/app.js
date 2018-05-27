@@ -1,21 +1,25 @@
-/*
- * Create a list that holds all of your cards
- */
- const allCards = ['fa-diamond','fa-diamond',
-               'fa-paper-plane-o','fa-paper-plane-o',
-               'fa-anchor','fa-anchor',
-               'fa-bolt','fa-bolt',
-               'fa-cube','fa-cube',
-               'fa-leaf','fa-leaf',
-               'fa-bicycle','fa-bicycle',
-               'fa-bomb','fa-bomb'
-               ];
+// List of all cards
+const allCards = ['fa-diamond','fa-diamond',
+              'fa-paper-plane-o','fa-paper-plane-o',
+              'fa-anchor','fa-anchor',
+              'fa-bolt','fa-bolt',
+              'fa-cube','fa-cube',
+              'fa-leaf','fa-leaf',
+              'fa-bicycle','fa-bicycle',
+              'fa-bomb','fa-bomb'
+              ];
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- */
+// Keep track of cards flipped
+let flippedCards = [];
 
+// Moves variables
+let moves = 0;
+let counter = document.querySelector(".moves");
+
+//Load New Game
+newGame();
+
+ /*   - shuffle the list of cards using the provided "shuffle" method below*/
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -31,81 +35,79 @@ function shuffle(array) {
     return array;
 }
 
-/*
- *   - loop through each card and create its HTML
- */
+//Create card HTML
 function makeCard(card) {
-  return `<li class="card"><i class="fa ${card}"></i></li>`;
+  return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
 
-/*
- *   - add each card's HTML to the page
- */
- function newGame(){
-   let deck = document.querySelector('.deck');
-   let cardGrid = shuffle(allCards).map(function(card) {
-     return makeCard(card);
-   });
+//Make card grid dynamically
+function newGame(){
+  let deck = document.querySelector('.deck');
+  let cardGrid = shuffle(allCards).map(function(card) {
+    return makeCard(card);
+  });
+  deck.innerHTML = cardGrid.join('');
+}
 
-   deck.innerHTML = cardGrid.join('');
- }
+// Counts the moves player makes
+function moveCounter(){
+  moves++;
+  counter.innerHTML = moves;
+}
 
- newGame();
+//Check to see if cards match
+function cardMatch(){
+  flippedCards[0].classList.add('match');
+  flippedCards[0].classList.add('open');
+  flippedCards[0].classList.add('show');
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- */
- let cardList = document.querySelectorAll('.card');
- /*Keep track of cards flipped*/
- let flippedCards = [];
+  flippedCards[1].classList.add('match');
+  flippedCards[1].classList.add('open');
+  flippedCards[1].classList.add('show');
+}
 
- for(let card of cardList) {
-   card.addEventListener('click', function(flip_card) {
-     //Disable clicking on the same card
-     if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
-     //Add the card to a *list* of "open" cards
-     flippedCards.push(card);
-       //Prevent from flipping more than two cards
-       if (flippedCards.length > 2){
-         //hide
-       } else {
-         //Show cards
-         card.classList.add('open','show');
-         //Check if cards match
-         if (flippedCards[0].dataset.card == flippedCards[1].dataset.card){
+// If cards do not match
+function notMatching(){
+  //Flip over after 800ms
+  setTimeout(function(){
+    for (let card of flippedCards){
+      card.classList.remove('open','show');
+    }
+    flippedCards = []; //Empty flippedCards array
+   }, 800);
+}
 
-             flippedCards[0].classList.add('match');
-             flippedCards[0].classList.add('open');
-             flippedCards[0].classList.add('show');
+//Event listener if a card is clicked
+let cardList = document.querySelectorAll('.card');
 
-             flippedCards[1].classList.add('match');
-             flippedCards[1].classList.add('open');
-             flippedCards[1].classList.add('show');
+for(let card of cardList) {
+  card.addEventListener('click', function(flipCard){
+    //Disable clicking on the same card
+    if (!card.classList.contains('open') &&     !card.classList.contains('show') && !card.classList.contains('match')){
 
-             //Empty flippedCards array
-             flippedCards = [];
-         } else {
+    //Add the card to a *list* of "open" cards
+    flippedCards.push(card);
 
-           //If cards don't match, flip them over
-           setTimeout(function(){
-             for (let card of flippedCards){
-               card.classList.remove('open','show');
-             }
-             //Empty flippedCards array
-             flippedCards = [];
-           }, 1000);
-         }
-         };
-       };
-    });
-  };
-
- /*
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+    //Prevent from flipping more than two cards
+    if (flippedCards.length > 2){
+        //hide
+    } else {
+        //Show cards
+        card.classList.add('open','show');
+        //Check if cards match
+        if (flippedCards[0].dataset.card ==   flippedCards[1].dataset.card){
+            moveCounter();
+            cardMatch();
+            //empty flippedCards array
+            flippedCards = [];
+          } else {
+            moveCounter();
+            notMatching();
+          }
+      }
+  }
+});
+  //empty flippedCards array
+  flippedCards = [];
+//end
+}
