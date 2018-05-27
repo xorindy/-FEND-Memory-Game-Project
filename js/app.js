@@ -16,6 +16,9 @@ let flippedCards = [];
 let moves = 0;
 let counter = document.querySelector(".moves");
 
+// Star Icons
+const stars = document.querySelectorAll('.fa-star');
+
 //Load New Game
 newGame();
 
@@ -53,6 +56,23 @@ function newGame(){
 function moveCounter(){
   moves++;
   counter.innerHTML = moves;
+
+  //Star rating handler
+  //if player has more than 8 moves, delete a star
+  if (moves > 8 && moves < 15) {
+    for (i=0; i < 3; i++) {
+      if (i > 1) {
+        stars[i].style.visibility = 'collapse';
+      }
+    }
+  //if player has more than 16 moves, delete a star
+} else if (moves > 16){
+    for (i=0; i<3; i++){
+      if(i > 0){
+        stars[i].style.visibility = 'collapse';
+      }
+    }
+  }
 }
 
 //Check to see if cards match
