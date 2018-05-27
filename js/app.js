@@ -16,6 +16,12 @@ let flippedCards = [];
 let moves = 0;
 let counter = document.querySelector(".moves");
 
+//Timer variables
+let sec = 0;
+let min = 0;
+const timer = document.querySelector('.timer');
+let interval;
+
 // Star Icons
 const stars = document.querySelectorAll('.fa-star');
 
@@ -57,15 +63,22 @@ function moveCounter(){
   moves++;
   counter.innerHTML = moves;
 
+  //start timer on first move
+  if(moves == 1){
+     sec = 0;
+     min = 0;
+     hour = 0;
+     startTimer();
+  }
   //Star rating handler
-  //if player has more than 8 moves, delete a star
+  //if player has more than 6 moves, delete a star
   if (moves > 8 && moves < 15) {
     for (i=0; i < 3; i++) {
       if (i > 1) {
         stars[i].style.visibility = 'collapse';
       }
     }
-  //if player has more than 16 moves, delete a star
+  //if player has more than 12 moves, delete a star
 } else if (moves > 16){
     for (i=0; i<3; i++){
       if(i > 0){
@@ -73,6 +86,27 @@ function moveCounter(){
       }
     }
   }
+}
+
+//Make the timer string with leading zeros
+function timeString(num) {
+  return (num < 10 ? '0' : '') + num;
+ }
+
+//Game timer
+function startTimer(){
+  interval = setInterval(function(){
+    timer.innerHTML = timeString(min)+":"+timeString(sec);
+    sec++;
+    if (sec === 60){
+      min++;
+      sec=0;
+    }
+    if(min === 60){
+      hour++;
+      min=0;
+    }
+  }, 1000);
 }
 
 //Check to see if cards match
