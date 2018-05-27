@@ -9,9 +9,6 @@ const allCards = ['fa-diamond','fa-diamond',
               'fa-bomb','fa-bomb'
               ];
 
-// Keep track of cards flipped
-let flippedCards = [];
-
 // Moves variables
 let moves = 0;
 let counter = document.querySelector(".moves");
@@ -19,11 +16,14 @@ let counter = document.querySelector(".moves");
 //Timer variables
 let sec = 0;
 let min = 0;
-const timer = document.querySelector('.timer');
+let timer = document.querySelector('.timer');
 let interval;
 
 // Star Icons
 const stars = document.querySelectorAll('.fa-star');
+
+// Keep track of cards flipped
+let flippedCards = [];
 
 //Load New Game
 newGame();
@@ -44,32 +44,50 @@ function shuffle(array) {
     return array;
 }
 
-//Create card HTML
+/*
+ *   - loop through each card and create its HTML
+ */
 function makeCard(card) {
   return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
 
-//Make card grid dynamically
 function newGame(){
   let deck = document.querySelector('.deck');
   let cardGrid = shuffle(allCards).map(function(card) {
     return makeCard(card);
   });
   deck.innerHTML = cardGrid.join('');
+
+    //reset Moves
+    moves = 0;
+    counter.innerHTML = moves;
+    //reset stars
+    for (var i=0; i < stars.length; i++){
+      stars[i].style.visibility = 'visible';
+    }
+    //reset Timer
+    let timer = document.querySelector('.timer');
+    timer.innerHTML = '';
+    clearInterval(interval);
+    //empty flippedCards array
+    flippedCards=[];
+    //add Event listener
+    eventListener();
 }
 
-// Counts the moves player makes
+// Move Counter function
 function moveCounter(){
   moves++;
   counter.innerHTML = moves;
 
   //start timer on first move
-  if(moves == 1){
-     sec = 0;
-     min = 0;
-     hour = 0;
-     startTimer();
-  }
+    if(moves == 1){
+       sec = 0;
+       min = 0;
+       hour = 0;
+       startTimer();
+    }
+
   //Star rating handler
   //if player has more than 6 moves, delete a star
   if (moves > 8 && moves < 15) {
@@ -79,7 +97,7 @@ function moveCounter(){
       }
     }
   //if player has more than 12 moves, delete a star
-} else if (moves > 16){
+  } else if (moves > 16){
     for (i=0; i<3; i++){
       if(i > 0){
         stars[i].style.visibility = 'collapse';
@@ -109,7 +127,7 @@ function startTimer(){
   }, 1000);
 }
 
-//Check to see if cards match
+//cardMatch function
 function cardMatch(){
   flippedCards[0].classList.add('match');
   flippedCards[0].classList.add('open');
@@ -120,9 +138,9 @@ function cardMatch(){
   flippedCards[1].classList.add('show');
 }
 
-// If cards do not match
+// Not matching function
 function notMatching(){
-  //Flip over after 800ms
+  //Flip over after 1 sec
   setTimeout(function(){
     for (let card of flippedCards){
       card.classList.remove('open','show');
@@ -131,7 +149,8 @@ function notMatching(){
    }, 800);
 }
 
-//Event listener if a card is clicked
+//Event listener for card
+function eventListener(){
 let cardList = document.querySelectorAll('.card');
 
 for(let card of cardList) {
@@ -139,13 +158,13 @@ for(let card of cardList) {
     //Disable clicking on the same card
     if (!card.classList.contains('open') &&     !card.classList.contains('show') && !card.classList.contains('match')){
 
-    //Add the card to a *list* of "open" cards
+  //Add the card to a *list* of "open" cards
     flippedCards.push(card);
 
-    //Prevent from flipping more than two cards
-    if (flippedCards.length > 2){
+  //Prevent from flipping more than two cards
+      if (flippedCards.length > 2){
         //hide
-    } else {
+      } else {
         //Show cards
         card.classList.add('open','show');
         //Check if cards match
@@ -154,14 +173,17 @@ for(let card of cardList) {
             cardMatch();
             //empty flippedCards array
             flippedCards = [];
-          } else {
+        } else {
             moveCounter();
             notMatching();
-          }
+
+        }
+        }
       }
-  }
-});
+    });
+
   //empty flippedCards array
   flippedCards = [];
-//end
+  //end
+}
 }
