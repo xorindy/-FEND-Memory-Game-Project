@@ -1,13 +1,16 @@
 // List of all cards
-const allCards = ['fa-diamond','fa-diamond',
+ const allCards=['fa-diamond','fa-diamond',
               'fa-paper-plane-o','fa-paper-plane-o',
               'fa-anchor','fa-anchor',
               'fa-bolt','fa-bolt',
               'fa-cube','fa-cube',
               'fa-leaf','fa-leaf',
               'fa-bicycle','fa-bicycle',
-              'fa-bomb','fa-bomb'
-              ];
+              'fa-bomb','fa-bomb'];
+
+//Get every card
+let oneCard = document.getElementsByClassName("card");
+let cards = [...oneCard];
 
 // Moves variables
 let moves = 0;
@@ -24,6 +27,18 @@ const stars = document.querySelectorAll('.fa-star');
 
 // Keep track of cards flipped
 let flippedCards = [];
+
+//Get all the cards that are matched
+let matchedCards = document.getElementsByClassName('match');
+
+//Congratulations Box
+let modal = document.getElementById('modal');
+
+//close popup when clicking on x
+let exit = document.querySelector('.close');
+
+// How many stars
+let starsList = document.querySelectorAll('.stars li');
 
 //Load New Game
 newGame();
@@ -71,7 +86,7 @@ function newGame(){
     clearInterval(interval);
     //empty flippedCards array
     flippedCards=[];
-    //add Event listener
+    //add Event listeners
     eventListener();
 }
 
@@ -129,13 +144,8 @@ function startTimer(){
 
 //cardMatch function
 function cardMatch(){
-  flippedCards[0].classList.add('match');
-  flippedCards[0].classList.add('open');
-  flippedCards[0].classList.add('show');
-
-  flippedCards[1].classList.add('match');
-  flippedCards[1].classList.add('open');
-  flippedCards[1].classList.add('show');
+  flippedCards[0].classList.add('match', 'open', 'show');
+  flippedCards[1].classList.add('match', 'open', 'show');
 }
 
 // Not matching function
@@ -146,31 +156,30 @@ function notMatching(){
       card.classList.remove('open','show');
     }
     flippedCards = []; //Empty flippedCards array
-   }, 800);
+   }, 500);
 }
 
 //Event listener for card
 function eventListener(){
-let cardList = document.querySelectorAll('.card');
-
-for(let card of cardList) {
-  card.addEventListener('click', function(flipCard){
+  for(let card of oneCard) {
+    card.addEventListener('click', function(flipCard){
     //Disable clicking on the same card
-    if (!card.classList.contains('open') &&     !card.classList.contains('show') && !card.classList.contains('match')){
+    if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
 
-  //Add the card to a *list* of "open" cards
-    flippedCards.push(card);
+    //Add the card to a *list* of "open" cards
+      flippedCards.push(card);
 
-  //Prevent from flipping more than two cards
+    //Prevent from flipping more than two cards
       if (flippedCards.length > 2){
         //hide
       } else {
         //Show cards
         card.classList.add('open','show');
         //Check if cards match
-        if (flippedCards[0].dataset.card ==   flippedCards[1].dataset.card){
+        if (flippedCards[0].dataset.card ===  flippedCards[1].dataset.card) {
             moveCounter();
             cardMatch();
+            winner();
             //empty flippedCards array
             flippedCards = [];
         } else {
@@ -184,6 +193,44 @@ for(let card of cardList) {
 
   //empty flippedCards array
   flippedCards = [];
-  //end
 }
+}
+
+//Pop up will be here
+
+function winner() {
+  if (matchedCards.length === 16){
+
+    // show the popup
+    modal.classList.add('show');
+
+    //Give elapsed time
+    clearInterval(interval);
+    endTime = timer.innerHTML;
+
+    //How many stars left
+    let finalStars = document.querySelector(".stars").innerHTML;
+
+    //show player stats
+    document.getElementById('totalMoves').innerHTML = moves;
+    document.getElementById('endTime').innerHTML = endTime;
+    document.getElementById('totalStars').innerHTML = finalStars;
+
+    //close popup
+    closeBox();
+  };
+}
+
+//Close the popup
+function closeBox(){
+  exit.addEventListener('click',function(x){
+    modal.classList.remove('show');
+    newGame();
+  });
+}
+
+//Play again
+function playAgain(){
+  modal.classList.remove('show');
+  newGame();
 }
