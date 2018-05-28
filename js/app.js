@@ -22,9 +22,6 @@ let min = 0;
 let timer = document.querySelector('.timer');
 let interval;
 
-// Star Icons
-const stars = document.querySelectorAll('.fa-star');
-
 // Keep track of cards flipped
 let flippedCards = [];
 
@@ -37,8 +34,8 @@ let modal = document.getElementById('modal');
 //close popup when clicking on x
 let exit = document.querySelector('.close');
 
-// How many stars
-let starsList = document.querySelectorAll('.stars li');
+// Star Icons
+const stars = document.querySelectorAll('.fa-star');
 
 //Load New Game
 newGame();
@@ -73,23 +70,30 @@ function newGame(){
   });
   deck.innerHTML = cardGrid.join('');
 
-    //reset Moves
-    moves = 0;
-    counter.innerHTML = moves;
-    //reset stars
-    for (var i=0; i < stars.length; i++){
-      stars[i].style.visibility = 'visible';
-    }
-    //reset Timer
-    let timer = document.querySelector('.timer');
-    timer.innerHTML = '';
-    clearInterval(interval);
+    reset();
+
     //empty flippedCards array
     flippedCards=[];
     //add Event listeners
     eventListener();
 }
 
+//Reset
+function reset(){
+      //Reset moves
+      moves = 0;
+      counter.innerHTML = moves;
+      //Reset stars
+      for (var i=0; i < stars.length; i++){
+        stars[i].classList.remove('fa-star-o');
+        stars[i].classList.add('fa-star');
+    }
+      //reset timer
+      let timer = document.querySelector('.timer');
+        timer.innerHTML = '';
+      clearInterval(interval);
+
+}
 // Move Counter function
 function moveCounter(){
   moves++;
@@ -104,18 +108,20 @@ function moveCounter(){
     }
 
   //Star rating handler
-  //if player has more than 6 moves, delete a star
-  if (moves > 8 && moves < 15) {
+  //if player has more than 16 moves, delete a star
+  if (moves > 16 && moves < 32) {
     for (i=0; i < 3; i++) {
       if (i > 1) {
-        stars[i].style.visibility = 'collapse';
+        stars[i].classList.remove('fa-star');
+        stars[i].classList.add('fa-star-o');
       }
     }
-  //if player has more than 12 moves, delete a star
-  } else if (moves > 16){
+  //if player has more than 33 moves, delete a star
+  } else if (moves > 33){
     for (i=0; i<3; i++){
       if(i > 0){
-        stars[i].style.visibility = 'collapse';
+        stars[i].classList.remove('fa-star');
+        stars[i].classList.add('fa-star-o');
       }
     }
   }
@@ -201,15 +207,15 @@ function eventListener(){
 function winner() {
   if (matchedCards.length === 16){
 
+    //How many stars left
+    let finalStars = document.querySelector('.stars').innerHTML;
+
     // show the popup
     modal.classList.add('show');
 
     //Give elapsed time
     clearInterval(interval);
     endTime = timer.innerHTML;
-
-    //How many stars left
-    let finalStars = document.querySelector(".stars").innerHTML;
 
     //show player stats
     document.getElementById('totalMoves').innerHTML = moves;
