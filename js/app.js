@@ -56,9 +56,7 @@ function shuffle(array) {
     return array;
 }
 
-/*
- *   - loop through each card and create its HTML
- */
+//loop through each card and create its HTML
 function makeCard(card) {
   return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
@@ -203,8 +201,7 @@ function eventListener(){
 }
 }
 
-//Pop up will be here
-
+//Pop up winner box
 function winner() {
   if (matchedCards.length === 16){
 

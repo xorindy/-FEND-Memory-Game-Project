@@ -17,7 +17,7 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('../img/geometry2.png');  /* Background pattern from Subtle Patterns */
     font-family: 'Patrick Hand', cursive;
     font-size: 20px;
 }
@@ -121,7 +121,7 @@ h1 {
  * Make star color orange
  */
 .fa-star {
-  color: orange;
+  color: #ffa500;
 }
 
 /*
@@ -130,7 +130,7 @@ h1 {
 
 .timer {
   margin: 0 0 0 50px;
-  color: blue;
+  color: #1034a6;
 }
 
 /*
@@ -159,22 +159,31 @@ h1 {
   width: 25%;
 }
 
+/*
+ * Close link
+ */
 .close {
   float: right;
   color: red;
 }
 
-/*Styling close "button"*/
-
 .content a{
   text-decoration: none;
 }
+
+/*
+ * Total stars shown horizontally
+ */
 
 #totalStars li{
     display: inline-block;
     list-style: none;
     margin: 0 5px 0 0;
 }
+
+/*
+ * Shows modal 
+ */
 
 .show {
   visibility: visible !important;
