@@ -71,6 +71,10 @@ h1 {
     transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
+    animation-name: flipInY;
+    -webkit-backface-visibility: visible !important;
+    backface-visibility: visible !important;
+    animation-duration: .75s;
 }
 
 .deck .card.show {
@@ -81,6 +85,8 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    -webkit-animation-name: pulse;
+    animation-name: pulse;
 }
 
 /*
@@ -111,6 +117,9 @@ h1 {
     cursor: pointer;
 }
 
+/*
+ * Make star color orange
+ */
 .fa-star {
   color: orange;
 }
@@ -171,6 +180,52 @@ h1 {
   visibility: visible !important;
   opacity: 100 !important;
 }
+
+/*
+ * Animations
+ */
+ @keyframes flipInY {
+ 	from {
+ 		transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+ 		animation-timing-function: ease-in;
+ 		opacity: 0;
+ 	}
+
+ 	40% {
+ 		transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+ 		animation-timing-function: ease-in;
+ 	}
+
+ 	60% {
+ 		transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+ 		opacity: 1;
+ 	}
+
+ 	80% {
+ 		transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+ 	}
+
+ 	to {
+ 		transform: perspective(400px);
+ 	}
+ }
+
+ @keyframes pulse {
+   from {
+     -webkit-transform: scale3d(1, 1, 1);
+     transform: scale3d(1, 1, 1);
+   }
+
+   50% {
+     -webkit-transform: scale3d(1.05, 1.05, 1.05);
+     transform: scale3d(1.05, 1.05, 1.05);
+   }
+
+   to {
+     -webkit-transform: scale3d(1, 1, 1);
+     transform: scale3d(1, 1, 1);
+   }
+ }
 
 /*Media Queries*/
 

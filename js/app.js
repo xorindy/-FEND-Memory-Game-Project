@@ -160,6 +160,7 @@ function notMatching(){
   setTimeout(function(){
     for (let card of flippedCards){
       card.classList.remove('open','show');
+      card.cardLiist.add('noMatch');
     }
     flippedCards = []; //Empty flippedCards array
    }, 500);
