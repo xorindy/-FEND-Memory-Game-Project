@@ -1,4 +1,5 @@
 # Memory Game Project
+by Clarinda Bui 
 
 # What is the Memory Game Project?
 A simple game built to test player's memory. There is a deck of 16 cards that will create 8 pairs,
