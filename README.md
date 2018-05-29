@@ -20,3 +20,7 @@ Match cards as fast a possible with the least amount of moves.
 * Match cards to the best of your ability
 * Try to get 3 stars (finish the game within 16 moves)
 * Have fun!
+
+## Dependencies
+[Google Font](http://fonts.google.com)
+[CSS Animations](https://daneden.github.io/animate.css/)
