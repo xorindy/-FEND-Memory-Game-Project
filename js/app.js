@@ -188,6 +188,8 @@ function eventListener(){
             flippedCards = [];
         } else {
             moveCounter();
+            notMatching();
+
         }
         }
       }
