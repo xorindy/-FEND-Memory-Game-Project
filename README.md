@@ -22,5 +22,5 @@ Match cards as fast a possible with the least amount of moves.
 * Have fun!
 
 ## Dependencies
-[Google Font](http://fonts.google.com)
-[CSS Animations](https://daneden.github.io/animate.css/)
+* [Google Font](http://fonts.google.com)
+* [CSS Animations](https://daneden.github.io/animate.css/)
