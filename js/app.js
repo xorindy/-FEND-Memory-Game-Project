@@ -9,12 +9,12 @@
               'fa-bomb','fa-bomb'];
 
 //Get every card
-let oneCard = document.getElementsByClassName("card");
+let oneCard = document.getElementsByClassName('card');
 let cards = [...oneCard];
 
 // Moves variables
 let moves = 0;
-let counter = document.querySelector(".moves");
+let counter = document.querySelector('.moves');
 
 //Timer variables
 let sec = 0;
@@ -188,8 +188,6 @@ function eventListener(){
             flippedCards = [];
         } else {
             moveCounter();
-            notMatching();
-
         }
         }
       }
